@@ -14,7 +14,7 @@ function travelInvestigation(input) {
     let invalidSentences = []; // array holding invalid sentences
     let validCounter = 0; // valid sentences counter
     let invalidCounter = 0; // invalid sentences counter
-    for (let i = 2; i < input.length; i++) { // iterate over all sentences
+    for (let i = 2; i < input.length; i++) { // iterate all sentences
         let sentence = input[i].toLowerCase(); // convert current sentence to lowercase
         if (checkAllCompanies(sentence, companies)) { // is it valid?
             validCounter++; // increase valid sentences counter

@@ -10,7 +10,7 @@
     let decoded = frontPart + missingWord.toLowerCase() + secondPart.toLowerCase(); // compose decoded first word
     let numbers = encryptedText.match(/[0-9]{3}\.?[0-9]*/g); // pattern to extract all three-digit numbers (including float) from text
     let res = '';  // res will hold second word decrypted
-    for (let i = 0; i < numbers.length; i++) { // iterate over three-digit numbers
+    for (let i = 0; i < numbers.length; i++) { // iterate three-digit numbers
         numbers[i] = Math.ceil(Number(numbers[i])); // round to floor floating point number
         let chr = String.fromCharCode(numbers[i]); // get ascii char for current number
         if (i === 0) chr = chr.toUpperCase(); // first char will be uppercase

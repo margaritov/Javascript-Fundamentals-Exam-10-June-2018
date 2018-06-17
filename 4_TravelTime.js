@@ -1,4 +1,6 @@
 function travelTime(input) {
+    // convert mixed-case string to first letter uppercase
+    // others  - lowercase
     function fixCityName(name) {
         let result = name;
         if (name[0] >= 'a' && name[0] <= 'z') {
@@ -7,40 +9,39 @@ function travelTime(input) {
         return result;
     }
 
-    let countries = new Map();
+    let countries = new Map(); // map holding countries
 
-    for (let line of input) {
-        [country, city, price] = line.split(' > ');
-        price = Number(price);
-        city = fixCityName(city);
-        //console.log((`${country} ${city} ${price}`));
+    for (let line of input) { // process input
+        [country, city, price] = line.split(' > '); // split current line to country, city, price
+        price = Number(price); // parse price to number
+        city = fixCityName(city); // fix city string format
 
-        if (!countries.has(country)) {
-            countries.set(country, new Map());
+        if (!countries.has(country)) { // country is not present in map
+            countries.set(country, new Map()); // add country to map
         }
-        if (!countries.get(country).has(city)) {
-            countries.get(country).set(city, price);
+        if (!countries.get(country).has(city)) { // city is not present in country
+            countries.get(country).set(city, price); // add city to country
         }
 
-        if (countries.get(country).get(city) > price) {
-            //update price
-            countries.get(country).set(city, price);
+        if (countries.get(country).get(city) > price) { // is current price is lower that stored ?
+            countries.get(country).set(city, price); // yes - update stored price
         }
     }
-    let sortedCountries = Array.from(countries.keys()).sort();
-    for (let destinationCountry of sortedCountries) {
+    let sortedCountries = Array.from(countries.keys()).sort(); //create array holding sorted country names
+    for (let destinationCountry of sortedCountries) { // iterate sorted country names
+        //create array holding city names, then sort it by travel cost
         let sortedCities = Array.from(countries.get(destinationCountry).keys()).sort((city1, city2) => {
-                let c1 = countries.get(destinationCountry).get(city1);
-                let c2 = countries.get(destinationCountry).get(city2);
-                return c1 - c2;
-            } )
-        let route = destinationCountry + ' -> ';
+            let c1 = countries.get(destinationCountry).get(city1);
+            let c2 = countries.get(destinationCountry).get(city2);
+            return c1 - c2;
+        })
+        let route = destinationCountry + ' -> '; // init current country route
 
-        for (let destinationCity of sortedCities) {
-            let currentPrice = countries.get(destinationCountry).get(destinationCity);
-            route += (`${destinationCity} -> ${currentPrice} `);
+        for (let destinationCity of sortedCities) { // iterate city names sorted by travel cost
+            let currentPrice = countries.get(destinationCountry).get(destinationCity); // get current city travel cost
+            route += (`${destinationCity} -> ${currentPrice} `); // add city name and travel cost to current route
         }
-        console.log(route);
+        console.log(route); // print route to console
     }
 }
 
